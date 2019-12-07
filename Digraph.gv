@@ -1,0 +1,6 @@
+// pydge
+digraph {
+	eat [label=1 color=black fillcolor=white penwidth=1 style=filled]
+	sleep [label=2 color=black fillcolor=white penwidth=1 style=filled]
+	eat -> sleep [label=1 penwidth=1 style=solid]
+}
