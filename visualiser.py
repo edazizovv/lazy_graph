@@ -1,4 +1,4 @@
-# Lazy Miner v.0.1.2
+# Lazy Miner v.0.1.3
 # @author: redjerdai
 
 # TODO: Add graphviz configuration options [10]
