@@ -28,12 +28,14 @@ data = pandas.read_excel(io=file)
 configuration = Configuration()
 reader = Reader(configuration=configuration)
 data = reader.read()
-graph = GraphSkeleton()
+graph = GraphSkeleton(configuration=configuration)
 
-result_data, result_group, edges, router, weights = dfg_calculate_with_pandas(configuration=configuration, graph=graph, data=data)
+#result_data, result_group, edges, router, weights = dfg_calculate_with_pandas(configuration=configuration, data=data)
+nodes_frame, timie, edges, weights = dfg_calculate_with_pandas(configuration=configuration, data=data)
+edges_colour_matrix = numpy.full(shape=(weights.shape[0], weights.shape[1]), fill_value='black', dtype='<U5')
 
-
-
+graph.feed_all(nodes_node_frame=nodes_frame, edges_names=edges, edges_weights=weights)
+"""
 # some temporal substitutions
 nodes_names, nodes_counts = numpy.unique(ar=data[activity_name].values, return_counts=True)
 subs = []
@@ -42,7 +44,7 @@ for k in range(nodes_names.shape[0]):
                                  'border_colouring': ['black'], 'back_colouring': ['white'], 'boldness': ['1']})
     subs.append(add)
 del add
-"""
+
 nodes_options = pandas.concat(objs=subs, axis=0, ignore_index=True)
 edges_styles = numpy.array([['solid'] * router.shape[0]] * router.shape[0])
 edges_boldness = numpy.ones(shape=(router.shape[0], router.shape[0]), dtype=str)

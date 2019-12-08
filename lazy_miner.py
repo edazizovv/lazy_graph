@@ -42,8 +42,12 @@ def dfg_calculate_with_numpy(data, case_id, activity_name, time_stamp):
     ...
 
 
-def dfg_calculate_with_pandas(configuration, graph, data):
+def dfg_calculate_with_pandas(configuration, data):
 
+    nodes_frame = data[configuration.activity_name].value_counts()
+    nodes_frame = {configuration.nodes_names_column: nodes_frame.index.values,
+                   configuration.nodes_weights_column: nodes_frame.values}
+    nodes_frame = pandas.DataFrame(data=nodes_frame)
     # Sort time stamp field
     data = data.sort_values(by=[configuration.time_stamp], axis='index')
     activities = numpy.unique(data[configuration.activity_name].values)
@@ -60,7 +64,11 @@ def dfg_calculate_with_pandas(configuration, graph, data):
     data[configuration.time_stamp], data[time_stamp_lagged] = data[configuration.time_stamp].astype(dtype=numpy.datetime64), data[time_stamp_lagged].astype(dtype=numpy.datetime64)
     data[configuration.duration] = data[time_stamp_lagged] - data[configuration.time_stamp]
     data[configuration.duration] = data[configuration.duration].astype(dtype=numpy.timedelta64)
-    timers = data.groupby([configuration.case_id, case_id_lagged]).agg(configuration.agg_func)
+    #timers = data.groupby([configuration.case_id, case_id_lagged]).agg(configuration.agg_func)
+    timers = data[[configuration.activity_name, activity_name_lagged, configuration.duration]].groupby([configuration.activity_name, activity_name_lagged]).agg(configuration.agg_func)
+
+
+
     # TODO: check 'from-to' ordering at the edges [7]
     edges = data[[configuration.activity_name, activity_name_lagged]].copy()
     edges = edges.values.astype(dtype=str)
@@ -78,7 +86,15 @@ def dfg_calculate_with_pandas(configuration, graph, data):
         weights[i, j] = counts[k]
     # TODO: add saving options for matrices [9]
 
-    return data, timers, edges, router, weights
+    timers_edges, timers_values = timers.index.to_frame().values, timers.values
+    timie = numpy.zeros(shape=(n, n), dtype=numpy.float64)
+    m = timers_edges.shape[0]
+    for k in numpy.arange(m):
+        i, j = activities.tolist().index(timers_edges[k, 0]), activities.tolist().index(timers_edges[k, 1])
+        timie[i, j] = timers_values[k, 0]
+
+    #return data, timers, edges, router, weights
+    return nodes_frame, timie, edges, weights
 
 #def dfg_calculate_with_pandas(data, case_id, activity_name, time_stamp, agg_func='mean'):
 def dfg_calculate_with_pandas_old(configuration, graph, data):
