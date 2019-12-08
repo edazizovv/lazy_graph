@@ -1,4 +1,4 @@
-# Lazy Miner v.0.1.1
+# Lazy Miner v.0.1.2
 # @author: redjerdai
 
 import os
