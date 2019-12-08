@@ -1,4 +1,4 @@
-# Lazy Miner v.0.1.3
+# Lazy Miner v.0.1.4
 # @author: redjerdai
 
 import pandas
