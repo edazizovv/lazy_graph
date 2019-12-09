@@ -1,8 +1,17 @@
-# Lazy Miner v.0.1.4
+# Lazy Miner v.0.1.5
 # @author: redjerdai
-
+# TODO: Add graphviz configuration options [10]
 import numpy
 import pandas
+
+import os
+os.environ["PATH"] += os.pathsep + 'C:\\Sygm\\RAMP\\IP-02\\OSTRTA\\graphviz-2.38\\release\\bin'
+from graphviz import Digraph
+
+# TODO: make nodes and edges class entities [11]
+# TODO: remove router; it should be gained automatically from weights / we should compare with zeros [13]
+# TODO: check input data [14]
+
 
 class GraphSkeleton:
 
@@ -26,13 +35,51 @@ class GraphSkeleton:
         self.edges.feed_edges(names=edges_names, weights=edges_weights,
                               boldness_low=edges_boldness_low, boldness_up=edges_boldness_up)
 
+    def draw(self):
+
+        # border_colouring, back_colouring, clustering, shaping, bordering,
+        graph = Digraph(comment='pydge')
+
+        # adding nodes
+        for k in range(self.nodes.n()):
+            # TODO: add such additional parameters as: border line style [12]
+            graph.node(name=self.nodes.names[k], label=self.nodes.labels[k],
+                       color='#000000',
+                       fillcolor=self.nodes.back_colours[k],
+                       penwidth='1',
+                       style='filled')
+
+        # adding edges
+        print(self.edges.names)
+        print(self.edges.router)
+        print(self.edges.n())
+        '''
+        for k in range(self.edges.m()):
+            _from = self.nodes.names.tolist().index(self.edges.names[k, 0])
+            _to = self.nodes.names.tolist().index(self.edges.names[k, 1])
+        '''
+
+        for i in range(self.edges.n()):
+            for j in range(self.edges.n()):
+                if self.edges.router[i, j]:
+                    print(self.nodes.names[i])
+                    print(self.nodes.names[j])
+                    print(self.edges.boldness_values[i])
+                    graph.edge(tail_name=self.nodes.names[i], head_name=self.nodes.names[j],
+                               label=str(self.edges.weights[i, j]), penwidth=str(self.edges.boldness_values[i, j]),
+                               style='solid')
+
+        graph.view()
+
 
 def str_vector(x):
     x = numpy.array(x, dtype=str)
     return x
 
+
 def str_concat(x):
     return x[0] + x[1]
+
 
 def str_vector_concat(a, b):
 
@@ -71,6 +118,7 @@ def str_vector_concat(a, b):
         else:
             raise Exception('I do not know how to treat that (-_-) Seriously...')
     return d
+
 
 def cut_hex(x):
     return hex(x)[2:]
@@ -111,12 +159,18 @@ class Nodes:
         self.back_colour_function.feed(data=node_frame[back_colour_column].values, low_bound_target=back_colour_low, up_bound_target=back_colour_up)
         self.back_colours = self.get_back_colour(value=node_frame[back_colour_column].values)
 
+    def n(self):
+
+        return self.names.shape[0]
+
 
 class Edges:
 
     def __init__(self):
 
+        # TODO: names is a misleading name for this field, it should be changed [18]
         self.names = None
+        self.router = None
         self.weights = None #numpy.zeros(shape=(dimensionality, dimensionality), dtype=int)
         self.boldness_base = ''
         self.boldness_function = DefaultScaleFunction(conversion_function=str_vector)
@@ -134,6 +188,13 @@ class Edges:
         self.weights = weights
         self.boldness_function.feed(data=weights, low_bound_target=boldness_low, up_bound_target=boldness_up)
         self.boldness_values = self.get_boldness(value=weights)
+        self.router = numpy.array(self.weights, dtype=bool)
+
+    def m(self):
+        return self.names.shape[0]
+
+    def n(self):
+        return self.router.shape[0]
 
 
 class DefaultScaleFunction:

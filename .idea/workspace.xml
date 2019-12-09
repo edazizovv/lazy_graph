@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8d438ea-ac4f-4cc6-b1ff-6dfb25df0625" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configuration.py" beforeDir="false" afterPath="$PROJECT_DIR$/configuration.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graph_skeleton.py" beforeDir="false" afterPath="$PROJECT_DIR$/graph_skeleton.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lazy_miner.py" beforeDir="false" afterPath="$PROJECT_DIR$/lazy_miner.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/readers.py" beforeDir="false" afterPath="$PROJECT_DIR$/readers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_runner.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/visualiser.py" beforeDir="false" afterPath="$PROJECT_DIR$/visualiser.py" afterDir="false" />
@@ -109,10 +111,10 @@
       <screen x="0" y="0" width="1304" height="768" />
     </state>
     <state x="236" y="22" key="SettingsEditor/0.0.1304.768@0.0.1304.768" timestamp="1575819696695" />
-    <state x="354" y="210" key="com.intellij.ide.util.TipDialog" timestamp="1575833297382">
+    <state x="354" y="210" key="com.intellij.ide.util.TipDialog" timestamp="1575917411111">
       <screen x="0" y="0" width="1304" height="768" />
     </state>
-    <state x="354" y="210" key="com.intellij.ide.util.TipDialog/0.0.1304.768@0.0.1304.768" timestamp="1575833297382" />
+    <state x="354" y="210" key="com.intellij.ide.util.TipDialog/0.0.1304.768@0.0.1304.768" timestamp="1575917411111" />
     <state x="374" y="295" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1575755086580">
       <screen x="0" y="0" width="1304" height="768" />
     </state>

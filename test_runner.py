@@ -1,4 +1,4 @@
-# Lazy Miner v.0.1.4
+# Lazy Miner v.0.1.5
 # @author: redjerdai
 
 import os
@@ -35,6 +35,7 @@ nodes_frame, timie, edges, weights = dfg_calculate_with_pandas(configuration=con
 edges_colour_matrix = numpy.full(shape=(weights.shape[0], weights.shape[1]), fill_value='black', dtype='<U5')
 
 graph.feed_all(nodes_node_frame=nodes_frame, edges_names=edges, edges_weights=weights)
+graph.draw()
 """
 # some temporal substitutions
 nodes_names, nodes_counts = numpy.unique(ar=data[activity_name].values, return_counts=True)
