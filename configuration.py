@@ -1,4 +1,4 @@
-# Lazy Miner v.0.1.5
+# Lazy Miner v.0.1.6
 # @author: redjerdai
 
 

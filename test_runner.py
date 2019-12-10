@@ -1,4 +1,4 @@
-# Lazy Miner v.0.1.5
+# Lazy Miner v.0.1.6
 # @author: redjerdai
 
 import os
@@ -31,10 +31,10 @@ data = reader.read()
 graph = GraphSkeleton(configuration=configuration)
 
 #result_data, result_group, edges, router, weights = dfg_calculate_with_pandas(configuration=configuration, data=data)
-nodes_frame, timie, edges, weights = dfg_calculate_with_pandas(configuration=configuration, data=data)
+nodes_frame, timie, edges, weights, activities = dfg_calculate_with_pandas(configuration=configuration, data=data)
 edges_colour_matrix = numpy.full(shape=(weights.shape[0], weights.shape[1]), fill_value='black', dtype='<U5')
 
-graph.feed_all(nodes_node_frame=nodes_frame, edges_names=edges, edges_weights=weights)
+graph.feed_all(nodes_node_frame=nodes_frame, nodes_names=activities, edges_names=edges, edges_weights=weights)
 graph.draw()
 """
 # some temporal substitutions

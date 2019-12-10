@@ -1,4 +1,4 @@
-# Lazy Miner v.0.1.5
+# Lazy Miner v.0.1.6
 # @author: redjerdai
 # TODO: Add graphviz configuration options [10]
 import numpy
@@ -24,12 +24,12 @@ class GraphSkeleton:
     # TODO: add groups and clusters [16]
     # TODO: clarify all names [17]
 
-    def feed_all(self, nodes_node_frame, edges_names, edges_weights,
+    def feed_all(self, nodes_node_frame, nodes_names, edges_names, edges_weights,
                       nodes_back_colour_low=50, nodes_back_colour_up=200,
                       edges_boldness_low=0.5, edges_boldness_up=4):
 
-        self.nodes.feed_nodes(node_frame=nodes_node_frame, name_column=self.configuration.nodes_names_column,
-                              label_column=self.configuration.nodes_labels_column, weight_column=self.configuration.nodes_weights_column,
+        self.nodes.feed_nodes(node_frame=nodes_node_frame, nodes_names=nodes_names,
+                              weight_column=self.configuration.nodes_weights_column,
                               back_colour_column=self.configuration.nodes_back_colour_column,
                               back_colour_low=nodes_back_colour_low, back_colour_up=nodes_back_colour_up)
         self.edges.feed_edges(names=edges_names, weights=edges_weights,
@@ -50,9 +50,9 @@ class GraphSkeleton:
                        style='filled')
 
         # adding edges
-        print(self.edges.names)
-        print(self.edges.router)
-        print(self.edges.n())
+        #print(self.edges.names)
+        #print(self.edges.router)
+        #print(self.edges.n())
         '''
         for k in range(self.edges.m()):
             _from = self.nodes.names.tolist().index(self.edges.names[k, 0])
@@ -62,9 +62,9 @@ class GraphSkeleton:
         for i in range(self.edges.n()):
             for j in range(self.edges.n()):
                 if self.edges.router[i, j]:
-                    print(self.nodes.names[i])
-                    print(self.nodes.names[j])
-                    print(self.edges.boldness_values[i])
+                    #print(self.nodes.names[i])
+                    #print(self.nodes.names[j])
+                    #print(self.edges.boldness_values[i])
                     graph.edge(tail_name=self.nodes.names[i], head_name=self.nodes.names[j],
                                label=str(self.edges.weights[i, j]), penwidth=str(self.edges.boldness_values[i, j]),
                                style='solid')
@@ -151,10 +151,11 @@ class Nodes:
         result = str_vector_concat(self.back_colour_base, scaled)
         return result
 
-    def feed_nodes(self, node_frame, name_column, label_column, weight_column, back_colour_column, back_colour_low, back_colour_up):
+    def feed_nodes(self, node_frame, nodes_names, weight_column, back_colour_column, back_colour_low, back_colour_up):
 
-        self.names = node_frame[name_column].values
-        self.labels = node_frame[label_column].values
+        #self.names = node_frame[name_column].values
+        self.names = nodes_names
+        self.labels = nodes_names#node_frame[label_column].values
         self.weights = node_frame[weight_column].values
         self.back_colour_function.feed(data=node_frame[back_colour_column].values, low_bound_target=back_colour_low, up_bound_target=back_colour_up)
         self.back_colours = self.get_back_colour(value=node_frame[back_colour_column].values)
