@@ -15,9 +15,9 @@ from graphviz import Digraph
 
 class GraphSkeleton:
 
-    def __init__(self, configuration):
+    def __init__(self, configuration, nodes_back_colour_base='#ffffff'):
 
-        self.nodes = Nodes()
+        self.nodes = Nodes(back_colour_base=nodes_back_colour_base)
         self.edges = Edges()
         self.configuration = configuration
 
@@ -28,7 +28,8 @@ class GraphSkeleton:
                       nodes_back_colour_low=50, nodes_back_colour_up=200,
                       edges_boldness_low=0.5, edges_boldness_up=4):
 
-        self.nodes.feed_nodes(node_frame=nodes_node_frame, nodes_names=nodes_names,
+        self.nodes.feed_nodes(activity_name=self.configuration.activity_name,
+                              node_frame=nodes_node_frame, nodes_names=nodes_names,
                               weight_column=self.configuration.nodes_weights_column,
                               back_colour_column=self.configuration.nodes_back_colour_column,
                               back_colour_low=nodes_back_colour_low, back_colour_up=nodes_back_colour_up)
@@ -135,13 +136,13 @@ def hex_vector(x):
 # TODO: Add check for consistency of inputs [16]
 class Nodes:
 
-    def __init__(self):
+    def __init__(self, back_colour_base):
 
         # TODO: select better names (uniform and intuitive) [15]
         self.names = None
         self.labels = None
         self.weights = None
-        self.back_colour_base = '#ffffff'
+        self.back_colour_base = back_colour_base
         self.back_colour_function = DefaultScaleFunction(conversion_function=hex_vector)
         self.back_colours = None
 
@@ -151,14 +152,18 @@ class Nodes:
         result = str_vector_concat(self.back_colour_base, scaled)
         return result
 
-    def feed_nodes(self, node_frame, nodes_names, weight_column, back_colour_column, back_colour_low, back_colour_up):
+    def feed_nodes(self, activity_name, node_frame, nodes_names, weight_column, back_colour_column, back_colour_low, back_colour_up):
 
         #self.names = node_frame[name_column].values
         self.names = nodes_names
         self.labels = nodes_names#node_frame[label_column].values
         self.weights = node_frame[weight_column].values
         self.back_colour_function.feed(data=node_frame[back_colour_column].values, low_bound_target=back_colour_low, up_bound_target=back_colour_up)
-        self.back_colours = self.get_back_colour(value=node_frame[back_colour_column].values)
+        #print(node_frame)
+        a = node_frame.sort_values(by=activity_name)
+        #a = numpy.sort()
+        #print(a)
+        self.back_colours = self.get_back_colour(value=a[back_colour_column].values)
 
     def n(self):
 

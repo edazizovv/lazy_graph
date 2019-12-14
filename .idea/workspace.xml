@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="f8d438ea-ac4f-4cc6-b1ff-6dfb25df0625" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_skeleton.py" beforeDir="false" afterPath="$PROJECT_DIR$/graph_skeleton.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lazy_miner.py" beforeDir="false" afterPath="$PROJECT_DIR$/lazy_miner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_runner.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

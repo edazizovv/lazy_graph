@@ -28,7 +28,7 @@ data = pandas.read_excel(io=file)
 configuration = Configuration()
 reader = Reader(configuration=configuration)
 data = reader.read()
-graph = GraphSkeleton(configuration=configuration)
+graph = GraphSkeleton(configuration=configuration, nodes_back_colour_base='#800080')
 
 #result_data, result_group, edges, router, weights = dfg_calculate_with_pandas(configuration=configuration, data=data)
 nodes_frame, timie, edges, weights, activities = dfg_calculate_with_pandas(configuration=configuration, data=data)
