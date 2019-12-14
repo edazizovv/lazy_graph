@@ -49,7 +49,7 @@ def dfg_calculate_with_pandas(configuration, data):
                    configuration.nodes_weights_column: nodes_frame.values}
     nodes_frame = pandas.DataFrame(data=nodes_frame)
     # Sort time stamp field
-    data = data.sort_values(by=[configuration.time_stamp], axis='index')
+    data = data.sort_values(by=[configuration.case_id, configuration.time_stamp], axis='index')
     activities = numpy.unique(data[configuration.activity_name].values)
     # TODO: rename these postfixes [5]
     # TODO: document it here [8]
@@ -58,12 +58,14 @@ def dfg_calculate_with_pandas(configuration, data):
     activity_name_lagged = configuration.activity_name + '_lagged'
     time_stamp_lagged = configuration.time_stamp + '_lagged'
     data[[case_id_lagged, activity_name_lagged, time_stamp_lagged]] = data[[configuration.case_id, configuration.activity_name, configuration.time_stamp]].shift(periods=-1, axis=0)
+    print(data[[configuration.case_id, case_id_lagged, configuration.activity_name, activity_name_lagged]])
     data = data.dropna()
     data = data[data[configuration.case_id] == data[case_id_lagged]]
     # TODO: add option to select time units [6]
     data[configuration.time_stamp], data[time_stamp_lagged] = data[configuration.time_stamp].astype(dtype=numpy.datetime64), data[time_stamp_lagged].astype(dtype=numpy.datetime64)
     data[configuration.duration] = data[time_stamp_lagged] - data[configuration.time_stamp]
     data[configuration.duration] = data[configuration.duration].astype(dtype=numpy.timedelta64)
+    #print(data)
     #timers = data.groupby([configuration.case_id, case_id_lagged]).agg(configuration.agg_func)
     timers = data[[configuration.activity_name, activity_name_lagged, configuration.duration]].groupby([configuration.activity_name, activity_name_lagged]).agg(configuration.agg_func)
 
@@ -71,6 +73,7 @@ def dfg_calculate_with_pandas(configuration, data):
 
     # TODO: check 'from-to' ordering at the edges [7]
     edges = data[[configuration.activity_name, activity_name_lagged]].copy()
+    print(edges)
     edges = edges.values.astype(dtype=str)
     edges, counts = numpy.unique(ar=edges, return_counts=True, axis=0)
 
