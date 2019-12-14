@@ -12,47 +12,41 @@ if d not in sys.path:
     sys.path.append(d)
 
 from lazy_miner import dfg_calculate_with_pandas
-from visualiser import visualise
 from configuration import Configuration
 from readers import Reader
 from graph_skeleton import GraphSkeleton
+from filter_tools import FilterTools
+from visualisation_tools import VisualisationTools
 
-'''
-file = 'C:/Users/MainUser/Desktop/ШУЕ.xlsx'
-case_id = 'case_id'
-activity_name = 'activity_name'
-time_stamp = 'time_stamp'
-data = pandas.read_excel(io=file)
-'''
+
 
 configuration = Configuration()
+#configuration.file = 'C:/Users/MainUser/Desktop/ШУЕ.xlsx'
+configuration.file = 'C:/Users/MainUser/Desktop/gex.xlsx'
+configuration.case_id = 'Title'
+configuration.activity_name = 'Position'
+configuration.time_stamp = 'DateTime'
+configuration.nodes_names_column = 'Position'
+
+
 reader = Reader(configuration=configuration)
 data = reader.read()
+
+# graph
+
 graph = GraphSkeleton(configuration=configuration, nodes_back_colour_base='#800080')
 
 #result_data, result_group, edges, router, weights = dfg_calculate_with_pandas(configuration=configuration, data=data)
-nodes_frame, timie, edges, weights, activities = dfg_calculate_with_pandas(configuration=configuration, data=data)
+data_new, nodes_frame, timie, edges, weights, activities = dfg_calculate_with_pandas(configuration=configuration, data=data)
 edges_colour_matrix = numpy.full(shape=(weights.shape[0], weights.shape[1]), fill_value='black', dtype='<U5')
 
 graph.feed_all(nodes_node_frame=nodes_frame, nodes_names=activities, edges_names=edges, edges_weights=weights)
 graph.draw()
-"""
-# some temporal substitutions
-nodes_names, nodes_counts = numpy.unique(ar=data[activity_name].values, return_counts=True)
-subs = []
-for k in range(nodes_names.shape[0]):
-    add = pandas.DataFrame(data={'name': [str(nodes_names[k])], 'label': [str(nodes_counts[k])],
-                                 'border_colouring': ['black'], 'back_colouring': ['white'], 'boldness': ['1']})
-    subs.append(add)
-del add
 
-nodes_options = pandas.concat(objs=subs, axis=0, ignore_index=True)
-edges_styles = numpy.array([['solid'] * router.shape[0]] * router.shape[0])
-edges_boldness = numpy.ones(shape=(router.shape[0], router.shape[0]), dtype=str)
+# distributions
 
+# (I want all those who went from 'sleep' to 'farm'
 
-# here goes visualisation
-
-visualise(nodes_options=nodes_options, router=router, weights=weights, edges_styles=edges_styles,
-          edges_boldness=edges_boldness)
-"""
+my_filtered = FilterTools.by_edge(configuration=configuration, data=data_new, from_edge='HeadlineList-4', to_edge='HeadlineList-5')
+#VisualisationTools.simple_hist(array=my_filtered[configuration.duration])
+VisualisationTools.estimate_hist(configuration=configuration, array=my_filtered[configuration.duration])

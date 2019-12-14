@@ -103,4 +103,4 @@ def dfg_calculate_with_pandas(configuration, data):
         timie[i, j] = timers_values[k, 0]
 
     #return data, timers, edges, router, weights
-    return nodes_frame, timie, edges, weights, activities
+    return data, nodes_frame, timie, edges, weights, activities
