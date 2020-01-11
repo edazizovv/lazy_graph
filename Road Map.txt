@@ -1,0 +1,6 @@
+The following directions of development are formulated for this project:
+
+	> graph visualisation functionality (+ different notations)
+	> graph structures saving
+	> native (for user) interaction
+	> process metrics

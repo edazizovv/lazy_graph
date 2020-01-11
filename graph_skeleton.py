@@ -5,7 +5,7 @@ import numpy
 import pandas
 
 import os
-os.environ["PATH"] += os.pathsep + 'C:\\Sygm\\RAMP\\IP-02\\OSTRTA\\graphviz-2.38\\release\\bin'
+os.environ["PATH"] += os.pathsep + 'E:\\RAMP-EXTERNAL\\IP-02\\OSTRTA\\graphviz-2.38\\release\\bin'
 from graphviz import Digraph
 
 # TODO: make nodes and edges class entities [11]

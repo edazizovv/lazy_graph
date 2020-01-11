@@ -19,10 +19,8 @@ from filter_tools import FilterTools
 from visualisation_tools import VisualisationTools
 
 
-
 configuration = Configuration()
-#configuration.file = 'C:/Users/MainUser/Desktop/ШУЕ.xlsx'
-configuration.file = 'C:/Users/MainUser/Desktop/gex.xlsx'
+configuration.file = d + '\\data\\gex.xlsx'
 configuration.case_id = 'Title'
 configuration.activity_name = 'Position'
 configuration.time_stamp = 'DateTime'
