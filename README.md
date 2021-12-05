@@ -1,2 +1,5 @@
-# lazy_graph
-This project contains some simple ("lazy") process mining & discovery tools
+# Summary
+
+Archieved.
+
+Implementation of some simple ("lazy") process mining & discovery tools
