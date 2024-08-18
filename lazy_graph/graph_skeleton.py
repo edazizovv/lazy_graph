@@ -1,5 +1,4 @@
-# Lazy Miner v.0.1.6
-# @author: redjerdai
+
 # TODO: Add graphviz configuration options [10]
 import numpy
 import pandas
@@ -39,7 +38,7 @@ class GraphSkeleton:
     def draw(self):
 
         # border_colouring, back_colouring, clustering, shaping, bordering,
-        graph = Digraph(comment='pydge')
+        graph = Digraph(comment='py')
 
         # adding nodes
         for k in range(self.nodes.n()):

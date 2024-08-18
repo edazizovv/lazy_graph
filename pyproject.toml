@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "lazy_graph"
+version = "0.0.1"
+description = "Naive process mining tool"
+authors = [
+  "edazizovv",
+]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "lazy_graph"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
